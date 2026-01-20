@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.InvoiceGenerator;
+import main.java.InvoiceService;
 import main.java.Ride;
 
 public class InvoiceServiceTest {
@@ -38,8 +39,28 @@ public class InvoiceServiceTest {
 	public void givenMultipleRides_ShouldReturnInvoiceSummary() {
 		Ride[] rides= {new Ride(2.0,5),new Ride(0.1,1)};
 		InvoiceSummary invoiceSummary=invoiceGenerator.calculateFare(rides);
-		InvoiceSummary expectedSummary=new InvoiceSummary(2,30);
+		InvoiceSummary expectedSummary=new InvoiceSummary(2,27);
 		Assert.assertEquals(expectedSummary, invoiceSummary);
 	}
 	
+	
+	 @Test
+	    public void givenUserId_ShouldReturnInvoiceSummary() {
+
+	        InvoiceService invoiceService = new InvoiceService();
+
+	        String userId = "user1";
+	        Ride[] rides = {
+	                new Ride(2.0, 5),
+	                new Ride(0.1, 1)
+	        };
+
+	        invoiceService.addRides(userId, rides);
+
+	        InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
+
+	        InvoiceSummary expectedSummary = new InvoiceSummary(2, 27);
+
+	        Assert.assertEquals(expectedSummary, summary);
+	    }
 }

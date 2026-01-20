@@ -13,6 +13,11 @@ public class InvoiceSummary {
 		this.totalFare = totalFare;
 		this.averageFare=this.totalFare/numOfRide;
 	}
+	
+	@Override
+	public int hashCode() {
+	    return Objects.hash(numOfRide, totalFare, averageFare);
+	}
 	 	
 	@Override
 	public boolean equals(Object obj) {
