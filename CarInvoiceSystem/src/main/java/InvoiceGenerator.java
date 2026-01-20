@@ -1,5 +1,7 @@
 package main.java;
 
+import main.test.InvoiceSummary;
+
 public class InvoiceGenerator {
 
 	public static final double minimumCostPerKilometer=10.0;
@@ -17,12 +19,19 @@ public class InvoiceGenerator {
 		
 	}
 
-	public double calculateFare(Ride[] rides) {
+//	public double calculateFare(Ride[] rides) {
+//		double summaryFare=0.0;
+//		for(Ride ride:rides) {
+//			summaryFare+= ride.distance*minimumCostPerKilometer+ride.time*costPerTime;
+//		}
+//		return summaryFare;
+//	}
+
+	public InvoiceSummary calculateFare(Ride[] rides) {
 		double summaryFare=0.0;
 		for(Ride ride:rides) {
 			summaryFare+= ride.distance*minimumCostPerKilometer+ride.time*costPerTime;
 		}
-		return summaryFare;
+		return new InvoiceSummary(rides.length,summaryFare);
 	}
-
 }
