@@ -4,34 +4,24 @@ import main.test.InvoiceSummary;
 
 public class InvoiceGenerator {
 
-	public static final double minimumCostPerKilometer=10.0;
-	public static final int costPerTime=1;
-	public static final double minimumFare=5.0;
-	
-	public double calculateTotalFare(double distance, double time) {
-		double totalFare= distance*minimumCostPerKilometer+time*costPerTime;
-		if(totalFare<minimumFare) {
-			return minimumFare;
-		}
-		else {
-			return totalFare;
-		}
-		
-	}
+    public double calculateTotalFare(Ride ride) {
+        double fare = ride.distance * ride.rideType.costPerKm
+                    + ride.time * ride.rideType.costPerMinute;
 
-//	public double calculateFare(Ride[] rides) {
-//		double summaryFare=0.0;
-//		for(Ride ride:rides) {
-//			summaryFare+= ride.distance*minimumCostPerKilometer+ride.time*costPerTime;
-//		}
-//		return summaryFare;
-//	}
+        return Math.max(fare, ride.rideType.minimumFare);
+    }
 
-	public InvoiceSummary calculateFare(Ride[] rides) {
-		double summaryFare=0.0;
-		for(Ride ride:rides) {
-			summaryFare+= ride.distance*minimumCostPerKilometer+ride.time*costPerTime;
-		}
-		return new InvoiceSummary(rides.length,summaryFare);
-	}
+    public InvoiceSummary calculateFare(Ride[] rides) {
+        double totalFare = 0.0;
+        for (Ride ride : rides) {
+            totalFare += calculateTotalFare(ride);
+        }
+        return new InvoiceSummary(rides.length, totalFare);
+    }
+    
+ // Method required by test cases
+    public double calculateTotalFare(double distance, int time) {
+        Ride ride = new Ride(distance, time);
+        return calculateTotalFare(ride);
+    }
 }

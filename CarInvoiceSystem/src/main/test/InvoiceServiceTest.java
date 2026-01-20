@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import main.java.InvoiceGenerator;
 import main.java.InvoiceService;
 import main.java.Ride;
+import main.java.RideType;
 
 public class InvoiceServiceTest {
 	
@@ -23,7 +24,7 @@ public class InvoiceServiceTest {
 	@Test
 	public void givenDistanceAndTime_ShouldReturnTotalFare() {
 		 double distance=20.0;
-		 double time=45.0;
+		 int time=45;
 		double totalFare=invoiceGenerator.calculateTotalFare(distance,time);
 		 Assert.assertEquals(900.0, totalFare,0.0);
 	}
@@ -31,7 +32,7 @@ public class InvoiceServiceTest {
 	@Test
 	public void givenDistanceAndTime_ShouldReturnMinFare() {
 		double distance=0.1;
-		 double time=1;
+		 int time=1;
 		double totalFare=invoiceGenerator.calculateTotalFare(distance,time);
 		 Assert.assertEquals(5.0, totalFare,0.0);
 	}
@@ -63,4 +64,22 @@ public class InvoiceServiceTest {
 
 	        Assert.assertEquals(expectedSummary, summary);
 	    }
+	 
+	 @Test
+	 public void givenPremiumRides_ShouldReturnInvoiceSummary() {
+	     Ride[] rides = {
+	             new Ride(2.0, 5, RideType.PREMIUM),
+	             new Ride(0.1, 1, RideType.PREMIUM)
+	     };
+
+	     InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
+	     InvoiceSummary summary = invoiceGenerator.calculateFare(rides);
+
+	     // Ride1: 2*15 + 5*2 = 40
+	     // Ride2: min fare = 20
+	     // Total = 60
+	     InvoiceSummary expected = new InvoiceSummary(2, 60);
+
+	     Assert.assertEquals(expected, summary);
+	 }
 }
