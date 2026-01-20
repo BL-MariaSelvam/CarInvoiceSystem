@@ -17,4 +17,12 @@ public class InvoiceGenerator {
 		
 	}
 
+	public double calculateFare(Ride[] rides) {
+		double summaryFare=0.0;
+		for(Ride ride:rides) {
+			summaryFare+= ride.distance*minimumCostPerKilometer+ride.time*costPerTime;
+		}
+		return summaryFare;
+	}
+
 }

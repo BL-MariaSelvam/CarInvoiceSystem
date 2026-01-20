@@ -5,10 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.InvoiceGenerator;
+import main.java.Ride;
 
 public class InvoiceServiceTest {
 	
 	InvoiceGenerator invoiceGenerator;
+	Ride ride;
 	
 	@BeforeEach
 	public void initialize() {
@@ -32,4 +34,11 @@ public class InvoiceServiceTest {
 		double totalFare=invoiceGenerator.calculateTotalFare(distance,time);
 		 Assert.assertEquals(5.0, totalFare,0.0);
 	}
+	@Test
+	public void givenMultipleRides_ShouldReturnInvoiceSummary() {
+		Ride[] rides= {new Ride(2.0,5),new Ride(0.1,1)};
+		double summaryInvoice=invoiceGenerator.calculateFare(rides);
+		Assert.assertEquals(30, summaryInvoice,0.0);
+	}
+	
 }
