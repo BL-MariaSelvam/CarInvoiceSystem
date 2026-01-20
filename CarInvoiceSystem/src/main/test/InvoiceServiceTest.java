@@ -24,5 +24,12 @@ public class InvoiceServiceTest {
 		double totalFare=invoiceGenerator.calculateTotalFare(distance,time);
 		 Assert.assertEquals(900.0, totalFare,0.0);
 	}
-
+	
+	@Test
+	public void givenDistanceAndTime_ShouldReturnMinFare() {
+		double distance=0.1;
+		 double time=1;
+		double totalFare=invoiceGenerator.calculateTotalFare(distance,time);
+		 Assert.assertEquals(5.0, totalFare,0.0);
+	}
 }
